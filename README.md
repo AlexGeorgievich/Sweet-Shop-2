@@ -6,7 +6,7 @@ Sweet Shop — локальная система для кондитерской
 
 Ниже — снимок работающей главной страницы проекта: витрина, навигация, hero-блок с десертом и виджет консультанта.
 
-![Главная страница Sweet Shop](docs/screenshots/homepage-working.png)
+<a href="docs/screenshots/homepage-working.png"><img src="docs/screenshots/homepage-working.png" alt="Главная страница Sweet Shop" width="760"></a>
 
 Онлайн-экран открывается после локального запуска по адресу <http://localhost:3000>.
 
@@ -98,7 +98,19 @@ Docker читает `.env` из корня, standalone frontend — `site/.env.l
 
 CRM поддерживает поиск по номеру, имени, телефону, товару и тексту; фильтры по статусу, товару, источнику и типу клиента; постраничный список; карточку заказа; смену статуса; назначение команды; задачи, комментарии, историю и аудит.
 
+Демо-список заявок с фильтрами и статусами:
+
+<a href="docs/screenshots/demo-orders.png"><img src="docs/screenshots/demo-orders.png" alt="CRM: список демо-заявок" width="760"></a>
+
 Аналитика пересчитывает выборку по периоду, товару, источнику, статусу, дню недели и часу. Доступны воронка, оплаченные заказы, конверсия, выручка, средний чек, рейтинг товаров, сравнение каналов и тепловая карта обращений.
+
+Экран производства с календарём заказов и загрузкой:
+
+<a href="docs/screenshots/demo-production.png"><img src="docs/screenshots/demo-production.png" alt="CRM: производство" width="760"></a>
+
+Экран аналитики с показателями, SLA и нагрузкой команды:
+
+<a href="docs/screenshots/demo-analytics.png"><img src="docs/screenshots/demo-analytics.png" alt="CRM: аналитика" width="760"></a>
 
 ## Telegram и ИИ-консультант
 
@@ -127,6 +139,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\smoke-demo.ps1
 ```
 
 Генератор учитывает связи между товаром, источником, статусом, временем ответа, ответственным, производственными задачами и конверсией. В выборке есть рабочие и проблемные заявки: просроченные SLA, отказы, повторные обращения, неполные данные и задержки производства. Генерация заменяет только `data_mode=demo`, выполняется транзакционно и не вызывает Telegram/LLM.
+
+Страница команды администратора и управления демогенерацией:
+
+<a href="docs/screenshots/demo-team.png"><img src="docs/screenshots/demo-team.png" alt="CRM: команда и генератор демоданных" width="760"></a>
+
+Карточка отдельной заявки с деталями клиента, сроками, составом и производством:
+
+<a href="docs/screenshots/demo-order-details.png"><img src="docs/screenshots/demo-order-details.png" alt="CRM: детали демо-заявки" width="760"></a>
 
 ## Проверка проекта
 
