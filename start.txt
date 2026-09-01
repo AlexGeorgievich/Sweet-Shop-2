@@ -1,0 +1,37 @@
+﻿Диагностика показала:
+
+  - служба Docker Desktop остановлена;
+  - Docker Engine недоступен;
+  - порты 8000, 3000 и 5432 никто не слушает;
+  - поэтому первый запрос к FastAPI завершается ошибкой соединения.
+
+  Правильная последовательность:
+
+  1. Запустите Docker Desktop и дождитесь сообщения, что Docker Engine работает.
+  2. Из корня Sweet-Shop-main подготовьте .env, если его ещё нет:
+
+  Copy-Item .env.example .env
+
+  В .env задайте собственные POSTGRES_PASSWORD, соответствующий пароль в DATABASE_URL и данные администратора. Не публикуйте этот файл.
+
+  3. Запустите всю систему:
+
+  .\scripts\start-local.ps1
+
+  4. Проверьте контейнеры:
+
+  docker compose ps
+
+  db, api и frontend должны быть запущены, а db и api — иметь состояние healthy.
+
+  5. При первом запуске создайте администратора:
+
+  docker compose --profile tools run --rm bootstrap-admin
+
+  После создания удалите ADMIN_PASSWORD из .env.
+
+  6. Только теперь запускайте проверку:
+
+  powershell -ExecutionPolicy Bypass -File .\scripts\smoke-release.ps1
+
+  Сценарий запросит логин и пароль администратора.

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/crm": {
+      "targetKind": "existing-ui",
+      "projectId": "0b296c39-a4a6-4286-9857-86569671c894",
+      "baselineDraftId": "1bd9f682-b97e-48b0-b4b0-4be470412089",
+      "activeDraftId": "1bd9f682-b97e-48b0-b4b0-4be470412089",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [".superdesign/design-system.md", "app/crm/page.tsx", "app/globals.css"],
+      "fingerprints": {
+        ".superdesign/design-system.md": "DD32C4A021B58EB7BEB06128D7208CC00DDBA851429A56BA5D812435F5A9AC9C",
+        "app/crm/page.tsx": "1F004ABBF414F1CE012689BBA07E6FF05DBA333AC7CEE266EDA476AC97EEB7B6",
+        "app/globals.css": "DD1DEA4BDD0F8B66FA0ECBDC57991FE643A1A4D3DCD0E6A840E7D54B37DE1F80"
+      },
+      "drafts": {
+        "1bd9f682-b97e-48b0-b4b0-4be470412089": {
+          "title": "CRM Панель Заявок — Сладкая история",
+          "visualDirection": "Плотная шоколадно-карамельная CRM с правой карточкой заказа",
+          "currentVersion": 2
+        }
+      },
+      "updatedAt": "2026-08-30T16:55:00.000Z"
+    },
+    "/crm/analytics": {
+      "targetKind": "existing-ui",
+      "projectId": "0b296c39-a4a6-4286-9857-86569671c894",
+      "baselineDraftId": "95ccd861-9929-4243-8eb6-f11210ee13dc",
+      "activeDraftId": "95ccd861-9929-4243-8eb6-f11210ee13dc",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [".superdesign/design-system.md", "app/crm/analytics/page.tsx", "app/globals.css"],
+      "fingerprints": {
+        ".superdesign/design-system.md": "DD32C4A021B58EB7BEB06128D7208CC00DDBA851429A56BA5D812435F5A9AC9C",
+        "app/crm/analytics/page.tsx": "2B8208198848797177AF38BE3F91AECD305DFED59DBDB0BB9014633D7C4A9BD6",
+        "app/globals.css": "DD1DEA4BDD0F8B66FA0ECBDC57991FE643A1A4D3DCD0E6A840E7D54B37DE1F80"
+      },
+      "drafts": {
+        "95ccd861-9929-4243-8eb6-f11210ee13dc": {
+          "title": "Сладкая история — Аналитический дашборд",
+          "visualDirection": "Шоколадно-карамельная аналитика",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-08-30T16:55:00.000Z"
+    }
+  }
+}

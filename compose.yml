@@ -1,0 +1,107 @@
+name: sweet-shop
+
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sweet_shop}
+      POSTGRES_USER: ${POSTGRES_USER:-sweet_shop}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sweet_shop_local}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sweet_shop} -d ${POSTGRES_DB:-sweet_shop}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  api:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      APP_ENVIRONMENT: ${APP_ENVIRONMENT:-local}
+      APP_VERSION: ${APP_VERSION:-0.8.0}
+      LOGIN_MAX_ATTEMPTS: ${LOGIN_MAX_ATTEMPTS:-5}
+      LOGIN_WINDOW_SECONDS: ${LOGIN_WINDOW_SECONDS:-300}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://sweet_shop:sweet_shop_local@db:5432/sweet_shop}
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=2)",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  migrate:
+    build:
+      context: ./backend
+    restart: "no"
+    environment:
+      APP_ENVIRONMENT: local
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://sweet_shop:sweet_shop_local@db:5432/sweet_shop}
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  import-orders:
+    build:
+      context: ./backend
+    profiles: ["tools"]
+    environment:
+      APP_ENVIRONMENT: local
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://sweet_shop:sweet_shop_local@db:5432/sweet_shop}
+    command: ["python", "scripts/import_json_orders.py", "--directory", "/legacy-data/orders"]
+    volumes:
+      - ./site/.data:/legacy-data:ro
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  bootstrap-admin:
+    build:
+      context: ./backend
+    profiles: ["tools"]
+    environment:
+      APP_ENVIRONMENT: local
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://sweet_shop:sweet_shop_local@db:5432/sweet_shop}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_FULL_NAME: ${ADMIN_FULL_NAME:-Администратор}
+    command: ["python", "-m", "scripts.bootstrap_admin"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    build:
+      context: ./site
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000}
+      ORDER_BACKEND: ${ORDER_BACKEND:-legacy}
+      CRM_BACKEND: ${CRM_BACKEND:-legacy}
+      API_INTERNAL_URL: http://api:8000
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

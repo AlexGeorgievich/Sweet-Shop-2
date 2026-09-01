@@ -1,0 +1,9 @@
+.data
+.next
+.vinext
+node_modules
+.npm-cache
+*.log
+*.tsbuildinfo
+.env*
+!.env.example

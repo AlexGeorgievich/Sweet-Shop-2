@@ -1,0 +1,36 @@
+# Dependencies and build output
+**/node_modules/
+**/.npm-cache/
+**/.next/
+**/.vinext/
+**/.wrangler/
+**/dist/
+**/out/
+**/coverage/
+
+# Local data and runtime artifacts
+**/.data/
+**/*.log
+**/*.pid
+**/*.tsbuildinfo
+
+# Local secrets
+**/.env*
+!**/.env.example
+
+# Python
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+
+# Keep an embedded repository's metadata local while flattening the publish tree
+**/.git-local-backup/
+
+# Local prompt transcript contains private credentials
+/doc/Prompts-1.txt
+
+# Platform files
+.DS_Store
+Thumbs.db
+backups/
